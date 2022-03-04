@@ -1,7 +1,9 @@
+import ContentCard from "../../components/ContentCard";
+
 const HomePage = () => {
   return (
     <div>
-      <h1>Home Page</h1>
+      <ContentCard />
     </div>
   );
 };
