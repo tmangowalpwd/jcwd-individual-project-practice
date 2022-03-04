@@ -73,6 +73,12 @@
       "content": "",
       "postId": 1,
       "id": 8
+    },
+    {
+      "username": "doraemon",
+      "content": "test comment",
+      "postId": 1,
+      "id": 9
     }
   ]
 }

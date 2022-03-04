@@ -24,6 +24,8 @@ const ContentCard = ({
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
 
+  const [displayCommentInput, setDisplayCommentInput] = useState(false);
+
   const fetchComments = () => {
     axios
       .get(`http://localhost:2000/comments`, {
@@ -57,6 +59,7 @@ const ContentCard = ({
 
     axios.post("http://localhost:2000/comments", newData).then(() => {
       fetchComments();
+      setDisplayCommentInput(false);
     });
   };
 
@@ -81,7 +84,12 @@ const ContentCard = ({
       {/* Action Buttons */}
       <Box paddingX="3" paddingY="2" display="flex" alignItems="center">
         <Icon boxSize={6} as={FaRegHeart} />
-        <Icon marginLeft="4" boxSize={6} as={FaRegComment} />
+        <Icon
+          onClick={() => setDisplayCommentInput(true)}
+          marginLeft="4"
+          boxSize={6}
+          as={FaRegComment}
+        />
       </Box>
 
       {/* Like Count */}
@@ -104,18 +112,20 @@ const ContentCard = ({
         </Text>
 
         {/* Comment Input */}
-        <Box display="flex">
-          <Input
-            onChange={handleCommentInput}
-            marginBottom="2"
-            type="text"
-            placeholder="Insert a new comment"
-            marginRight="4"
-          />
-          <Button onClick={postNewComment} colorScheme="green">
-            Post
-          </Button>
-        </Box>
+        {displayCommentInput ? (
+          <Box display="flex">
+            <Input
+              onChange={handleCommentInput}
+              marginBottom="2"
+              type="text"
+              placeholder="Insert a new comment"
+              marginRight="4"
+            />
+            <Button onClick={postNewComment} colorScheme="green">
+              Post
+            </Button>
+          </Box>
+        ) : null}
 
         {/* Comment */}
         {comments.length === 0 ? (
