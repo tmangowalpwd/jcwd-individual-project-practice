@@ -8,9 +8,10 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import { FaRegHeart, FaHeart, FaRegComment } from "react-icons/fa";
+import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import Comment from "../Comment";
 import axios from "axios";
+import { API_URL } from "../../configs/api";
 
 const ContentCard = ({
   username,
@@ -28,7 +29,7 @@ const ContentCard = ({
 
   const fetchComments = () => {
     axios
-      .get(`http://localhost:2000/comments`, {
+      .get(`${API_URL}/comments`, {
         params: {
           postId: id,
         },
@@ -57,7 +58,7 @@ const ContentCard = ({
       postId: id,
     };
 
-    axios.post("http://localhost:2000/comments", newData).then(() => {
+    axios.post(`${API_URL}/comments`, newData).then(() => {
       fetchComments();
       setDisplayCommentInput(false);
     });
@@ -89,6 +90,11 @@ const ContentCard = ({
           marginLeft="4"
           boxSize={6}
           as={FaRegComment}
+          sx={{
+            _hover: {
+              cursor: "pointer",
+            },
+          }}
         />
       </Box>
 

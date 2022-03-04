@@ -2,12 +2,13 @@ import { useState } from "react";
 import ContentCard from "../../components/ContentCard";
 import axios from "axios";
 import { Box, Button } from "@chakra-ui/react";
+import { API_URL } from "../../configs/api";
 
 const HomePage = () => {
   const [contentList, setContentList] = useState([]);
 
   const fetchContentList = () => {
-    axios.get("http://localhost:2000/posts").then((res) => {
+    axios.get(`${API_URL}/posts`).then((res) => {
       setContentList(res.data);
     });
   };
