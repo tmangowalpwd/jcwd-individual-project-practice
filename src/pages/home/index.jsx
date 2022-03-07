@@ -10,6 +10,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { API_URL } from "../../configs/api";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [contentList, setContentList] = useState([]);
@@ -89,6 +90,9 @@ const HomePage = () => {
           <AlertTitle>{errorMessage}</AlertTitle>
         </Alert>
       ) : null} */}
+      <Link to="/profile">
+        <Button>Go To Profile</Button>
+      </Link>
       <Button onClick={fetchContentList}>Refresh Page</Button>
       <Box paddingY="8">{renderContentList()}</Box>
     </>

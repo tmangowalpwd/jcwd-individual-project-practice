@@ -13,15 +13,9 @@ import Comment from "../Comment";
 import axios from "axios";
 import { API_URL } from "../../configs/api";
 
-const ContentCard = ({
-  username,
-  location,
-  caption,
-  numberOfLikes,
-  imageUrl,
-  id,
-}) => {
-  // const { username, location, caption, numberOfLikes, imageUrl } = props;
+const ContentCard = (props) => {
+  const { username, location, caption, numberOfLikes, imageUrl, id } = props;
+
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
 
@@ -41,7 +35,9 @@ const ContentCard = ({
 
   const renderComments = () => {
     return comments.map((val) => {
-      return <Comment content={val.content} username={val.username} />;
+      return (
+        <Comment {...props} content={val.content} username={val.username} />
+      );
     });
   };
 
