@@ -14,6 +14,8 @@ class HomeClass extends React.Component {
     alert("Terjadi perubahan state");
   }
 
+  componentWillUnmount() {}
+
   render() {
     return (
       <div>

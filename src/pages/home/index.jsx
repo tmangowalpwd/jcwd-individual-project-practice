@@ -1,18 +1,50 @@
 import { useState, useEffect } from "react";
 import ContentCard from "../../components/ContentCard";
 import axios from "axios";
-import { Box, Button } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  Spinner,
+  useToast,
+} from "@chakra-ui/react";
 import { API_URL } from "../../configs/api";
 
 const HomePage = () => {
   const [contentList, setContentList] = useState([]);
-  const [username, setUsername] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const toast = useToast();
+
+  // const [username, setUsername] = useState("");
+  // const [fullName, setFullName] = useState("");
 
   const fetchContentList = () => {
-    axios.get(`${API_URL}/posts`).then((res) => {
-      setContentList(res.data);
-    });
+    setIsLoading(true);
+
+    setTimeout(() => {
+      axios
+        .get(`${API_URL}/posts`)
+        .then((res) => {
+          setContentList(res.data);
+        })
+        .catch((err) => {
+          // setErrorMessage("")
+          toast({
+            title: "Fetch data failed",
+            description: "There is an error at the server",
+            status: "error",
+            duration: 4000,
+            isClosable: true,
+            position: "top",
+          });
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }, 2000);
   };
 
   const renderContentList = () => {
@@ -43,26 +75,23 @@ const HomePage = () => {
   }, []);
 
   // componentDidUpdate
-  useEffect(() => {
-    if (username !== "" || fullName !== "") {
-      alert("terjadi perubahan state");
-    }
-  }, [username, fullName]);
+  // useEffect(() => {
+  //   if (username !== "" || fullName !== "") {
+  //     alert("terjadi perubahan state");
+  //   }
+  // }, [username, fullName]);
 
   return (
-    <Box paddingY="8">
-      <Button marginBottom="4" onClick={() => setUsername("seto")}>
-        change username
-      </Button>
-      <Button marginBottom="4" onClick={() => setFullName("mark")}>
-        change full name
-      </Button>
-
-      <Button marginBottom="4" onClick={fetchContentList}>
-        Fetch Posts
-      </Button>
-      {renderContentList()}
-    </Box>
+    <>
+      {isLoading ? <Spinner size="lg" /> : null}
+      {/* {errorMessage ? (
+        <Alert status="error">
+          <AlertTitle>{errorMessage}</AlertTitle>
+        </Alert>
+      ) : null} */}
+      <Button onClick={fetchContentList}>Refresh Page</Button>
+      <Box paddingY="8">{renderContentList()}</Box>
+    </>
   );
 };
 
