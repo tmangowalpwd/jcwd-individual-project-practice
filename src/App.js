@@ -13,15 +13,15 @@ const Navbar = () => {
 
 function App() {
   return (
-    <Box paddingX="16">
-      <Navbar />
-      <BrowserRouter>
+    <BrowserRouter>
+      <Box paddingX="16">
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
-      </BrowserRouter>
-    </Box>
+      </Box>
+    </BrowserRouter>
   );
 }
 

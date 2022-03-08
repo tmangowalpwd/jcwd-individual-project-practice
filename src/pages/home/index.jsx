@@ -6,6 +6,7 @@ import {
   AlertTitle,
   Box,
   Button,
+  Center,
   Spinner,
   useToast,
 } from "@chakra-ui/react";
@@ -27,7 +28,11 @@ const HomePage = () => {
 
     setTimeout(() => {
       axios
-        .get(`${API_URL}/posts`)
+        .get(`${API_URL}/posts`, {
+          params: {
+            _expand: "user",
+          },
+        })
         .then((res) => {
           setContentList(res.data);
         })
@@ -52,7 +57,7 @@ const HomePage = () => {
     return contentList.map((val) => {
       return (
         <ContentCard
-          username={val.username}
+          username={val.user.username}
           caption={val.caption}
           imageUrl={val.image_url}
           location={val.location}
@@ -94,7 +99,9 @@ const HomePage = () => {
         <Button>Go To Profile</Button>
       </Link>
       <Button onClick={fetchContentList}>Refresh Page</Button>
-      <Box paddingY="8">{renderContentList()}</Box>
+      <Center>
+        <Box paddingY="8">{renderContentList()}</Box>
+      </Center>
     </>
   );
 };
